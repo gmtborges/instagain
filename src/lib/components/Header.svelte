@@ -32,7 +32,7 @@
 								<a class="link link-primary" href="/signin">Entrar</a>
 							</li>
 							<li>
-								<a class="link link-secondary" href="/register">Registar</a>
+								<a class="link link-secondary" href="/giveaway">Cadastrar Sorteio</a>
 							</li>
 						</div>
 					{:else}
@@ -95,7 +95,7 @@
 			{:else}
 				<div class="flex gap-4 items-center">
 					<a class="btn btn-outline btn-primary text-lg" href="/signin"> Entrar </a>
-					<a class="btn btn-outline btn-secondary text-lg" href="/register">Registrar</a>
+					<a class="btn btn-outline btn-secondary text-lg" href="/giveaway">Cadastrar Sorteio</a>
 				</div>
 			{/if}
 		</div>

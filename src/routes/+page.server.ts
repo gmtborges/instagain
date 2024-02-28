@@ -5,10 +5,10 @@ import { lte } from 'drizzle-orm';
 import { UTCDate } from '@date-fns/utc';
 import { addWeeks, setHours, setMinutes } from 'date-fns';
 
-type Period = 'day' | 'week' | 'month';
+type Period = '1' | '7' | '30' | '60';
 
 export const load: PageServerLoad = async ({ url }) => {
-  const period = url.searchParams.get('period') || 'month';
+  const period = url.searchParams.get('period') || '30';
 
   const endDate = getEndDate(period as Period);
 
@@ -22,11 +22,13 @@ export const load: PageServerLoad = async ({ url }) => {
 function getEndDate(period: Period) {
   const now = new UTCDate();
   switch (period) {
-    case 'day':
+    case '1':
       return setMinutes(setHours(now, 23), 59).toISOString();
-    case 'week':
+    case '7':
       return addWeeks(now, 1).toISOString();
-    case 'month':
+    case '30':
       return addWeeks(now, 4).toISOString();
+    case '60':
+      return addWeeks(now, 8).toISOString();
   }
 }

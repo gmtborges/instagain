@@ -1,14 +1,30 @@
+<script lang="ts">
+	import { enhance } from '$app/forms';
+	import type { ActionData } from './$types';
+
+	export let form: ActionData;
+</script>
+
 <div class="flex justify-center mt-20 sm:mt-44 lg:mt-52 px-4">
 	<div class="bg-white p-8 rounded-lg shadow-md w-full max-w-lg border">
-		<form class="space-y-4">
+		{#if form?.error}
+			<div class="toast">
+				<div class="alert alert-warning">
+					<span>{form.error}</span>
+				</div>
+			</div>
+		{/if}
+		<form class="space-y-4" use:enhance method="POST">
 			<div>
-				<label for="name" class="block mb-2 text-sm font-medium text-gray-700"
+				<label for="email" class="block mb-2 text-sm font-medium text-gray-700"
 					>E-mail</label>
 				<input
 					type="email"
 					name="email"
+					value={form?.email ?? ''}
 					id="email"
 					placeholder="usuario@exemplo.com"
+					required
 					class="input input-bordered w-full" />
 			</div>
 			<div>
@@ -19,6 +35,7 @@
 					type="password"
 					name="password"
 					id="password"
+					required
 					placeholder="Sua senha"
 					class="input input-bordered w-full" />
 			</div>

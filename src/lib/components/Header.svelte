@@ -1,8 +1,11 @@
-<script>
-	let firstName = '';
+<script lang="ts">
+	import type { User } from 'lucia';
+
+	export let currentUser: User | null;
 </script>
 
-<header class="transition-shadow sticky z-50 top-0 duration-500 ease-in-out navbar bg-base-100">
+<header
+	class="transition-shadow sticky z-50 top-0 duration-500 ease-in-out navbar bg-base-100">
 	<div class="w-full mx-auto max-w-6xl">
 		<div class="navbar-start flex">
 			<div class="dropdown">
@@ -12,27 +15,25 @@
 						class="h-5 w-5"
 						fill="none"
 						viewBox="0 0 24 24"
-						stroke="currentColor"
-					>
+						stroke="currentColor">
 						<path
 							stroke-linecap="round"
 							stroke-linejoin="round"
 							stroke-width="2"
-							d="M4 6h16M4 12h8m-8 6h16"
-						>
+							d="M4 6h16M4 12h8m-8 6h16">
 						</path>
 					</svg>
 				</div>
 				<ul
-					class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-40"
-				>
-					{#if firstName}
+					class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-40">
+					{#if currentUser}
 						<div>
 							<li>
 								<a class="link link-primary" href="/signin">Entrar</a>
 							</li>
 							<li>
-								<a class="link link-secondary" href="/giveaway">Cadastrar Sorteio</a>
+								<a class="link link-secondary" href="/giveaway"
+									>Cadastrar Sorteio</a>
 							</li>
 						</div>
 					{:else}
@@ -41,16 +42,20 @@
 								<a class="link" href="/configs">Configurações</a>
 							</li>
 							<li>
-								<a href="/api/auth/signout" class="link link-primary"> Sair </a>
+								<form action="?/signout" method="POST">
+									<button class="link link-primary"> Sair </button>
+								</form>
 							</li>
 						</div>
 					{/if}
 				</ul>
 			</div>
-			<a href="/" class="btn btn-ghost text-3xl font-display text-primary"> InstaGain </a>
+			<a href="/" class="btn btn-ghost text-3xl font-display text-primary">
+				InstaGain
+			</a>
 		</div>
 		<div class="navbar-end hidden sm:flex gap-4">
-			{#if firstName}
+			{#if currentUser}
 				<div class="flex items-center">
 					<a href="/configs" class="btn btn-ghost">
 						<svg
@@ -59,8 +64,7 @@
 							viewBox="0 0 24 24"
 							stroke-width="1.5"
 							stroke="currentColor"
-							class="w-8"
-						>
+							class="w-8">
 							<path
 								stroke-linecap="round"
 								stroke-linejoin="round"
@@ -69,33 +73,35 @@
 							<path
 								stroke-linecap="round"
 								stroke-linejoin="round"
-								d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-							>
+								d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z">
 							</path>
 						</svg>
 					</a>
-					<a href="/api/auth/signout" class="btn btn-ghost">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							class="w-8 text-primary"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9"
-							>
-							</path>
-						</svg>
-					</a>
+					<form action="?/signout" method="POST">
+						<button class="btn btn-ghost">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke-width="1.5"
+								stroke="currentColor"
+								class="w-8 text-primary">
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9">
+								</path>
+							</svg>
+						</button>
+					</form>
 				</div>
 			{:else}
 				<div class="flex gap-4 items-center">
-					<a class="btn btn-outline btn-primary text-lg" href="/signin"> Entrar </a>
-					<a class="btn btn-outline btn-secondary text-lg" href="/giveaway">Cadastrar Sorteio</a>
+					<a class="btn btn-outline btn-primary text-lg" href="/signin">
+						Entrar
+					</a>
+					<a class="btn btn-outline btn-secondary text-lg" href="/giveaway"
+						>Cadastrar Sorteio</a>
 				</div>
 			{/if}
 		</div>

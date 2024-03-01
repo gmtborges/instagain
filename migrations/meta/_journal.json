@@ -8,6 +8,13 @@
       "when": 1709161435657,
       "tag": "0000_giant_garia",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1709243459986,
+      "tag": "0001_sturdy_owl",
+      "breakpoints": true
     }
   ]
 }

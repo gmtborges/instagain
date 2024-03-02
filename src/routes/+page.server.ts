@@ -9,7 +9,7 @@ import { lucia } from '$lib/server/auth';
 
 type Period = '1' | '7' | '30' | '60';
 
-export const load: PageServerLoad = async ({ url }) => {
+export const load: PageServerLoad = async ({ url, locals }) => {
 	const period = url.searchParams.get('period') || '30';
 
 	const endDate = getEndDate(period as Period);
@@ -18,7 +18,7 @@ export const load: PageServerLoad = async ({ url }) => {
 		where: lte(instagramGiveaways.endDate, endDate)
 	});
 
-	return { items, period };
+	return { items, period, currentUser: locals.user };
 };
 
 function getEndDate(period: Period) {
@@ -37,7 +37,6 @@ function getEndDate(period: Period) {
 
 export const actions: Actions = {
 	signout: async ({ locals, cookies }) => {
-		console.log('signout');
 		if (!locals.session) {
 			return fail(401);
 		}

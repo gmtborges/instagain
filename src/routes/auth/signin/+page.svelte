@@ -8,7 +8,7 @@
 </script>
 
 <svelte:head>
-	<title>Entrar</title>
+	<title>InstaGain - Entrar</title>
 </svelte:head>
 
 <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-lg border">
@@ -21,7 +21,7 @@
 	{/if}
 	<div class="text-center mt-4">
 		<span>Não possui conta?</span>
-		<a href="/auth/register" class="link link-secondary font-bold">Registrar</a>
+		<a href="/auth/register" class="link link-primary font-bold">Registrar</a>
 	</div>
 	<form
 		class="space-y-4"
@@ -104,7 +104,7 @@
 	</form>
 	<div class="divider">OU</div>
 	<div class="flex items-center justify-center mt-4">
-		<a href="#" class="btn btn-block">
+		<a href="/auth/signin/google" class="btn btn-block">
 			<span>
 				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="w-6">
 					<path

@@ -45,6 +45,7 @@ async function seedUsers() {
 		id: generateId(15),
 		fullName: 'Test User',
 		email: 'user@test.com',
+		emailVerified: true,
 		hashedPassword
 	});
 }

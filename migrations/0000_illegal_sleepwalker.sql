@@ -29,9 +29,9 @@ CREATE TABLE `sessions` (
 CREATE TABLE `users` (
 	`id` text PRIMARY KEY NOT NULL,
 	`full_name` text,
-	`email` text,
+	`email` text NOT NULL,
 	`email_verified` integer DEFAULT false NOT NULL,
-	`hashed_password` text NOT NULL,
+	`hashed_password` text,
 	`provider_id` text
 );
 --> statement-breakpoint

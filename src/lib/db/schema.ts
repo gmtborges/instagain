@@ -11,7 +11,7 @@ export const users = sqliteTable(
 		fullName: text('full_name'),
 		email: text('email').unique().notNull(),
 		emailVerified: integer('email_verified', { mode: 'boolean' }).notNull().default(false),
-		hashedPassword: text('hashed_password').notNull(),
+		hashedPassword: text('hashed_password'),
 		providerId: text('provider_id').unique()
 	},
 	(table) => {

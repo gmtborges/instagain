@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "c99a0bfe-74c3-4ca5-999d-ac5bff18fcbe",
+  "id": "a69da790-60cd-4753-98c7-6b75f7aedb74",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "email_verification_codes": {
@@ -204,7 +204,7 @@
           "name": "email",
           "type": "text",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "email_verified": {
@@ -219,7 +219,7 @@
           "name": "hashed_password",
           "type": "text",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false
         },
         "provider_id": {

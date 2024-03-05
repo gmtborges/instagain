@@ -7,7 +7,7 @@
 </script>
 
 <svelte:head>
-	<title>Instagain - Seu sorteios em um só lugar.</title>
+	<title>InstaGain - Seus sorteios em um só lugar.</title>
 </svelte:head>
 
 <Header currentUser={data.currentUser} />

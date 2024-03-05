@@ -6,6 +6,8 @@ import { emailVerificationCodes, sessions, users } from '$lib/db/schema';
 import { TimeSpan, createDate } from 'oslo';
 import { generateRandomString, alphabet } from 'oslo/crypto';
 import { eq } from 'drizzle-orm';
+import { Google } from 'arctic';
+import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_REDIRECT_URI } from '$env/static/private';
 
 const adapter = new DrizzleSQLiteAdapter(db, sessions, users);
 
@@ -24,6 +26,8 @@ export const lucia = new Lucia(adapter, {
 		};
 	}
 });
+
+export const google = new Google(GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_REDIRECT_URI);
 
 declare module 'lucia' {
 	interface Register {

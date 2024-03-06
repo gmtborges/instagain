@@ -12,9 +12,10 @@
 	class="transition-shadow sticky z-50 top-0 duration-500 ease-in-out navbar bg-base-100"
 	class:shadow-lg={hasScrolled}>
 	<div class="w-full mx-auto max-w-6xl">
-		<div class="navbar-start flex">
-			<div class="dropdown">
-				<div tabindex="0" role="button" class="btn btn-ghost sm:hidden">
+		<div class="flex w-full">
+			<a href="/" class="btn btn-ghost text-3xl font-display text-primary"> InstaGain </a>
+			<div class="ml-auto dropdown">
+				<div tabindex="0" role="button" class="btn btn-ghost md:hidden">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						class="h-5 w-5"
@@ -30,19 +31,12 @@
 					</svg>
 				</div>
 				<ul
-					class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-40">
+					class="menu menu-sm dropdown-content mt-3 right-2 z-[1] p-2 shadow bg-base-100 rounded-box w-max">
 					{#if currentUser}
 						<div>
 							<li>
-								<a class="link link-primary" href="/auth/signin">Entrar</a>
+								<a class="link link-secondary" href="/giveaway">Cadastrar Sorteio</a>
 							</li>
-							<li>
-								<a class="link link-secondary" href="/giveaway"
-									>Cadastrar Sorteio</a>
-							</li>
-						</div>
-					{:else}
-						<div>
 							<li>
 								<a class="link" href="/profile">Perfil</a>
 							</li>
@@ -52,21 +46,24 @@
 								</form>
 							</li>
 						</div>
+					{:else}
+						<div>
+							<li>
+								<a class="link link-secondary" href="/giveaway">Cadastrar Sorteio</a>
+							</li>
+							<li>
+								<a class="link link-primary" href="/auth/signin">Entrar</a>
+							</li>
+						</div>
 					{/if}
 				</ul>
 			</div>
-			<a href="/" class="btn btn-ghost text-3xl font-display text-primary">
-				InstaGain
-			</a>
 		</div>
-		<div class="navbar-end hidden sm:flex gap-4">
+		<div class="navbar-end hidden md:flex gap-4">
 			{#if currentUser}
-				<div class="flex items-center">
-					<a
-						href="/profile"
-						class="btn btn-ghost"
-						role="button"
-						aria-label="Perfil">
+				<div class="flex items-center gap-2">
+					<a class="btn btn-outline btn-secondary text-lg" href="/giveaway">Cadastrar Sorteio</a>
+					<a href="/profile" class="btn btn-ghost" role="button" aria-label="Perfil">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							fill="none"
@@ -100,11 +97,8 @@
 				</div>
 			{:else}
 				<div class="flex gap-4 items-center">
-					<a class="btn btn-outline btn-primary text-lg" href="/auth/signin">
-						Entrar
-					</a>
-					<a class="btn btn-outline btn-secondary text-lg" href="/giveaway"
-						>Cadastrar Sorteio</a>
+					<a class="btn btn-outline btn-secondary text-lg" href="/giveaway">Cadastrar Sorteio</a>
+					<a class="btn btn-outline btn-primary text-lg" href="/auth/signin"> Entrar </a>
 				</div>
 			{/if}
 		</div>

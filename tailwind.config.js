@@ -17,11 +17,12 @@ export default {
 		themes: [
 			{
 				light: {
-					primary: '#8b5cf6',
-					secondary: '#E66643',
-					accent: '#43E6B3',
+					primary: '#9333ea',
+					secondary: '#f97316',
+					accent: '#34d399',
 					neutral: '#CCCCCC',
-					'base-100': '#FFFFFF'
+					success: '#4ade80',
+					'base-100': '#ffffff'
 				}
 			}
 		]

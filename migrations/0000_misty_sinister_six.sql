@@ -14,9 +14,11 @@ CREATE TABLE `instagram_giveaways` (
 	`link` text NOT NULL,
 	`category` text,
 	`should_follow` integer DEFAULT false NOT NULL,
+	`should_like` integer DEFAULT false NOT NULL,
 	`should_follow_others` integer DEFAULT false NOT NULL,
 	`should_comment` integer DEFAULT false NOT NULL,
-	`should_mention` integer DEFAULT false NOT NULL
+	`should_mention` integer DEFAULT false NOT NULL,
+	`is_draft` integer DEFAULT true NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE `sessions` (
@@ -32,7 +34,8 @@ CREATE TABLE `users` (
 	`email` text NOT NULL,
 	`email_verified` integer DEFAULT false NOT NULL,
 	`hashed_password` text,
-	`provider_id` text
+	`provider_id` text,
+	`is_admin` integer DEFAULT false NOT NULL
 );
 --> statement-breakpoint
 CREATE UNIQUE INDEX `users_email_unique` ON `users` (`email`);--> statement-breakpoint

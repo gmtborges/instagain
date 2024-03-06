@@ -1,22 +1,30 @@
 import { instagramGiveaways } from '$lib/db/schema';
 import { db } from '$lib/server/db';
 import type { Actions, PageServerLoad } from './$types';
-import { lte } from 'drizzle-orm';
+import { and, eq, lte } from 'drizzle-orm';
 import { UTCDate } from '@date-fns/utc';
 import { addWeeks, setHours, setMinutes } from 'date-fns';
 import { fail, redirect } from '@sveltejs/kit';
 import { lucia } from '$lib/server/auth';
 
-type Period = '1' | '7' | '30' | '60';
+type Period = 'day' | 'week' | 'month' | '2months';
 
 export const load: PageServerLoad = async ({ url, locals }) => {
-	const period = url.searchParams.get('period') || '30';
+	const period = url.searchParams.get('period') || 'month';
 
 	const endDate = getEndDate(period as Period);
+	console.log('endDate', endDate);
 
-	const items = await db.query.instagramGiveaways.findMany({
-		where: lte(instagramGiveaways.endDate, endDate)
-	});
+	const items = await db
+		.select()
+		.from(instagramGiveaways)
+		.where(
+			and(
+				lte(instagramGiveaways.endDate, endDate),
+				eq(instagramGiveaways.isDraft, false)
+			)
+		)
+		.orderBy(instagramGiveaways.endDate);
 
 	return { items, period, currentUser: locals.user };
 };
@@ -24,13 +32,13 @@ export const load: PageServerLoad = async ({ url, locals }) => {
 function getEndDate(period: Period) {
 	const now = new UTCDate();
 	switch (period) {
-		case '1':
+		case 'day':
 			return setMinutes(setHours(now, 23), 59).toISOString();
-		case '7':
+		case 'week':
 			return addWeeks(now, 1).toISOString();
-		case '30':
+		case 'month':
 			return addWeeks(now, 4).toISOString();
-		case '60':
+		case '2months':
 			return addWeeks(now, 8).toISOString();
 	}
 }

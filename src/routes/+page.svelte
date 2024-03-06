@@ -2,8 +2,16 @@
 	import type { PageServerData } from './$types';
 	import GiveawayCard from '$lib/components/GiveawayCard.svelte';
 	import Header from '$lib/components/Header.svelte';
+	import { page } from '$app/stores';
+	import { goto } from '$app/navigation';
 
 	export let data: PageServerData;
+
+	const handleChange = (e: Event) => {
+		const target = e.target as HTMLInputElement;
+		$page.url.searchParams.set('period', target.value);
+		goto(`?${$page.url.searchParams.toString()}`, { invalidateAll: true });
+	};
 </script>
 
 <svelte:head>
@@ -30,17 +38,20 @@
 				<a href="/auth/verify-email" class="btn">Verificar E-mail</a>
 			</div>
 		{/if}
-		<h1 class="mb-10 text-5xl text-center font-display">Sorteios no Instagram</h1>
-		<p class="text-3xl my-3">Encerra:</p>
-		<form class="flex flex-col sm:flex-row mb-10 gap-5">
+		<h1 class="mb-5 text-5xl text-center font-display">
+			Sorteios no Instagram
+		</h1>
+		<p class="text-2xl my-3">Encerra:</p>
+		<form class="flex flex-col sm:flex-row mb-10 md:gap-3">
 			<label class="label cursor-pointer">
 				<span class="label-text text-lg mr-2">Hoje</span>
 				<input
 					type="radio"
 					name="radio-period"
 					value="day"
+					on:change={handleChange}
 					class="radio checked:bg-accent"
-					checked={data.period === '1'} />
+					checked={data.period === 'day'} />
 			</label>
 			<label class="label cursor-pointer">
 				<span class="label-text text-lg mr-2">Em 7 dias</span>
@@ -48,8 +59,9 @@
 					type="radio"
 					name="radio-period"
 					value="week"
+					on:change={handleChange}
 					class="radio checked:bg-accent"
-					checked={data.period === '7'} />
+					checked={data.period === 'week'} />
 			</label>
 			<label class="label cursor-pointer">
 				<span class="label-text text-lg mr-2">Em um mês</span>
@@ -57,17 +69,9 @@
 					type="radio"
 					name="radio-period"
 					value="month"
+					on:change={handleChange}
 					class="radio checked:bg-accent"
-					checked={data.period === '30'} />
-			</label>
-			<label class="label cursor-pointer">
-				<span class="label-text text-lg mr-2">Em 2 meses</span>
-				<input
-					type="radio"
-					name="radio-period"
-					value="month"
-					class="radio checked:bg-accent"
-					checked={data.period === '60'} />
+					checked={data.period === 'month'} />
 			</label>
 		</form>
 		<section class="flex flex-col items-center">

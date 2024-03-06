@@ -11,14 +11,14 @@
 	<title>Verificação de E-mail</title>
 </svelte:head>
 
-<div class="bg-white p-4 rounded-lg shadow-md w-full max-w-lg border">
-	{#if form?.error}
-		<div class="toast">
-			<div class="alert" class:alert-warning={form.level === 'warn'}>
-				<span>{form.error}</span>
-			</div>
+{#if form?.error}
+	<div class="toast">
+		<div class="alert" class:alert-warning={form.level === 'warn'}>
+			<span>{form.error}</span>
 		</div>
-	{/if}
+	</div>
+{/if}
+<div class="bg-white p-4 rounded-lg shadow-md w-full max-w-lg border">
 	<h2 class="text-2xl font-bold my-4">Verificação de E-mail</h2>
 	<p>
 		Um código de verificação foi enviado para <strong>{data.currentUser.email}</strong>.

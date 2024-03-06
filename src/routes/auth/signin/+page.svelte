@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import Toast from '$lib/components/Toast.svelte';
 	import type { ActionData } from './$types';
 
 	export let form: ActionData;
@@ -11,14 +12,8 @@
 	<title>InstaGain - Entrar</title>
 </svelte:head>
 
+<Toast level={form?.level} msg={form?.msg} />
 <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-lg border">
-	{#if form?.error}
-		<div class="toast">
-			<div class="alert alert-warning">
-				<span>{form.error}</span>
-			</div>
-		</div>
-	{/if}
 	<div class="text-center mt-4">
 		<span>Não possui conta?</span>
 		<a href="/auth/register" class="link link-primary font-bold">Registrar</a>

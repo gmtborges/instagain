@@ -31,7 +31,7 @@ export async function GET({ url, cookies }: RequestEvent): Promise<Response> {
 
 		// Replace this with your own DB client.
 		const existingUser = await db
-			.select()
+			.select({ id: users.id })
 			.from(users)
 			.where(eq(users.providerId, `google|${googleUser.sub}`));
 

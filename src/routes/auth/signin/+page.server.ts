@@ -21,11 +21,15 @@ export const actions: Actions = {
 		) {
 			return fail(400, {
 				email,
-				error: 'E-mail e senha são obrigatórios'
+				level: 'warn',
+				msg: 'E-mail e senha são obrigatórios'
 			});
 		}
 
-		const existingUser = await db.select().from(users).where(eq(users.email, email.toLowerCase()));
+		const existingUser = await db
+			.select()
+			.from(users)
+			.where(eq(users.email, email.toLowerCase()));
 
 		if (!existingUser.length) {
 			// NOTE:
@@ -39,15 +43,20 @@ export const actions: Actions = {
 			// If usernames are public, you may outright tell the user that the username is invalid.
 			return fail(400, {
 				email,
-				error: 'E-mail ou senha incorretos'
+				level: 'warn',
+				msg: 'E-mail ou senha incorretos'
 			});
 		}
 
-		const validPassword = await new Argon2id().verify(existingUser[0].hashedPassword, password);
+		const validPassword = await new Argon2id().verify(
+			existingUser[0].hashedPassword!,
+			password
+		);
 		if (!validPassword) {
 			return fail(400, {
 				email,
-				error: 'E-mail ou senha incorretos'
+				level: 'warn',
+				msg: 'E-mail ou senha incorretos'
 			});
 		}
 

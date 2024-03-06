@@ -1,8 +1,8 @@
-endDate,link,category,shoudFollow,shouldFollowOthers,shoudComment,shouldMention
-02/12/2024,https://www.instagram.com/p/C3GGgX4LXaB/,,,,,
-30/03/2024,https://www.instagram.com/p/C3Yia2SvWF7/,,,,,
-04/05/2024,https://www.instagram.com/p/C3qJXKEriv7/,,,,,
-29/02/2024,https://www.instagram.com/p/C3qv_zAOohw/,,,,,
-26/02/2024,https://www.instagram.com/p/C3V50sqthRy/,,,,,
-31/03/2024,https://www.instagram.com/p/C2_IAGOJalT/,,,,,
-03/08/2024,https://www.instagram.com/p/C3pg2lVsHNg/,,,,,
+endDate,link,category,shoudFollow,shouldFollowOthers,shoudComment,shouldMention,isDraft
+2024-12-02,https://www.instagram.com/p/C3GGgX4LXaB/,,TRUE,TRUE,TRUE,TRUE,
+2024-03-30,https://www.instagram.com/p/C3Yia2SvWF7/,,TRUE,TRUE,TRUE,TRUE,
+2024-05-04,https://www.instagram.com/p/C3qJXKEriv7/,,TRUE,TRUE,TRUE,TRUE,
+2024-02-29,https://www.instagram.com/p/C3qv_zAOohw/,,TRUE,TRUE,TRUE,TRUE,
+2024-02-26,https://www.instagram.com/p/C3V50sqthRy/,,TRUE,TRUE,TRUE,TRUE,
+2024-03-31,https://www.instagram.com/p/C2_IAGOJalT/,,TRUE,TRUE,TRUE,TRUE,
+2024-08-03,https://www.instagram.com/p/C3pg2lVsHNg/,,TRUE,TRUE,TRUE,TRUE,

@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "a69da790-60cd-4753-98c7-6b75f7aedb74",
+  "id": "8b2769e5-ced4-4885-90b6-2b755df12d04",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "email_verification_codes": {
@@ -109,6 +109,14 @@
           "autoincrement": false,
           "default": false
         },
+        "should_like": {
+          "name": "should_like",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
         "should_follow_others": {
           "name": "should_follow_others",
           "type": "integer",
@@ -132,6 +140,14 @@
           "notNull": true,
           "autoincrement": false,
           "default": false
+        },
+        "is_draft": {
+          "name": "is_draft",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": true
         }
       },
       "indexes": {},
@@ -228,6 +244,14 @@
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
+        },
+        "is_admin": {
+          "name": "is_admin",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
         }
       },
       "indexes": {

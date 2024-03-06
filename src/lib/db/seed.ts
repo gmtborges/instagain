@@ -28,7 +28,19 @@ async function seedGiveaways() {
 			rows.push(data);
 		})
 		.on('end', async () => {
-			await db.insert(schema.instagramGiveaways).values(rows);
+			const values = rows.map((row) => {
+				return {
+					endDate: row.endDate,
+					link: row.link,
+					category: row.category,
+					shouldFollow: !!row.shouldFollow,
+					shouldFollowOthers: !!row.shouldFollowOthers,
+					shouldComment: !!row.shouldComment,
+					shouldMention: !!row.shouldMention,
+					isDraft: !!row.isDraft
+				};
+			});
+			await db.insert(schema.instagramGiveaways).values(values);
 			console.log('Seed done');
 		});
 }
@@ -46,7 +58,8 @@ async function seedUsers() {
 		fullName: 'Test User',
 		email: 'user@test.com',
 		emailVerified: true,
-		hashedPassword
+		hashedPassword,
+		isAdmin: true
 	});
 }
 

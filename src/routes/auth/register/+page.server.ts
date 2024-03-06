@@ -25,7 +25,7 @@ export const actions: Actions = {
 				name,
 				email,
 				level: 'warn',
-				error: 'E-mail invalido'
+				msg: 'E-mail invalido'
 			});
 		}
 		if (
@@ -38,7 +38,7 @@ export const actions: Actions = {
 				name,
 				email,
 				level: 'warn',
-				error: 'Senha não atende aos requisitos mínimos de segurança.'
+				msg: 'Senha não atende aos requisitos mínimos de segurança.'
 			});
 		}
 
@@ -47,7 +47,7 @@ export const actions: Actions = {
 				name,
 				email,
 				level: 'warn',
-				error: 'Nome completo deve ter entre 3 e 255 caracteres.'
+				msg: 'Nome completo deve ter entre 3 e 255 caracteres.'
 			});
 		}
 
@@ -69,7 +69,7 @@ export const actions: Actions = {
 						name,
 						email,
 						level: 'warn',
-						error: 'E-mail já cadastrado'
+						msg: 'E-mail já cadastrado'
 					});
 				}
 			} else {
@@ -78,7 +78,7 @@ export const actions: Actions = {
 					name,
 					email,
 					level: 'error',
-					error: 'Erro no servidor. Tente novamente mais tarde.'
+					msg: 'Erro no servidor. Tente novamente mais tarde.'
 				});
 			}
 		}

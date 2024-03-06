@@ -22,7 +22,8 @@ export const lucia = new Lucia(adapter, {
 		return {
 			// attributes has the type of DatabaseUserAttributes
 			emailVerified: attributes.emailVerified,
-			email: attributes.email
+			email: attributes.email,
+			isAdmin: attributes.isAdmin
 		};
 	}
 });
@@ -39,6 +40,7 @@ declare module 'lucia' {
 interface DatabaseUserAttributes {
 	email: string;
 	emailVerified: boolean;
+	isAdmin: boolean;
 }
 
 export async function generateEmailVerificationCode(

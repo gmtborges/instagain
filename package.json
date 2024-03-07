@@ -48,6 +48,7 @@
 		"arctic": "^1.2.1",
 		"date-fns": "^3.3.1",
 		"drizzle-orm": "^0.29.4",
+		"lodash-es": "^4.17.21",
 		"nodemailer": "^6.9.11",
 		"oslo": "^1.1.2",
 		"svelte-email": "^0.0.4"

@@ -1,9 +1,9 @@
-import { instagramGiveaways } from '$lib/db/schema';
+import { instagramGiveaways, usersInstagramGiveaways } from '$lib/db/schema';
 import { db } from '$lib/server/db';
 import type { Actions, PageServerLoad } from './$types';
-import { and, eq, lte } from 'drizzle-orm';
+import { and, eq, gte, lte } from 'drizzle-orm';
 import { UTCDate } from '@date-fns/utc';
-import { addWeeks, setHours, setMinutes } from 'date-fns';
+import { addHours, addWeeks } from 'date-fns';
 import { fail, redirect } from '@sveltejs/kit';
 import { lucia } from '$lib/server/auth';
 
@@ -11,29 +11,82 @@ type Period = 'day' | 'week' | 'month' | '2months';
 
 export const load: PageServerLoad = async ({ url, locals }) => {
 	const period = url.searchParams.get('period') || 'month';
+	const filterBookmark = url.searchParams.get('bookmark');
+	let items = [];
 
-	const endDate = getEndDate(period as Period);
-	console.log('endDate', endDate);
-
-	const items = await db
-		.select()
-		.from(instagramGiveaways)
-		.where(
-			and(
-				lte(instagramGiveaways.endDate, endDate),
-				eq(instagramGiveaways.isDraft, false)
+	if (filterBookmark === 'true' && locals.user) {
+		items = await db
+			.select({
+				id: instagramGiveaways.id,
+				createdAt: instagramGiveaways.createdAt,
+				endDate: instagramGiveaways.endDate,
+				link: instagramGiveaways.link,
+				category: instagramGiveaways.category,
+				shouldFollow: instagramGiveaways.shouldFollow,
+				shouldLike: instagramGiveaways.shouldLike,
+				shouldFollowOthers: instagramGiveaways.shouldFollowOthers,
+				shouldComment: instagramGiveaways.shouldComment,
+				shouldMention: instagramGiveaways.shouldMention,
+				isDraft: instagramGiveaways.isDraft,
+				isBookmark: usersInstagramGiveaways.userId
+			})
+			.from(instagramGiveaways)
+			.leftJoin(
+				usersInstagramGiveaways,
+				eq(usersInstagramGiveaways.giveawayId, instagramGiveaways.id)
 			)
-		)
-		.orderBy(instagramGiveaways.endDate);
+			.where(
+				and(
+					eq(usersInstagramGiveaways.userId, locals.user.id),
+					eq(instagramGiveaways.isDraft, false)
+				)
+			)
+			.orderBy(instagramGiveaways.endDate);
+	} else {
+		const endDate = getEndDate(period as Period);
+		items = await db
+			.select({
+				id: instagramGiveaways.id,
+				createdAt: instagramGiveaways.createdAt,
+				endDate: instagramGiveaways.endDate,
+				link: instagramGiveaways.link,
+				category: instagramGiveaways.category,
+				shouldFollow: instagramGiveaways.shouldFollow,
+				shouldLike: instagramGiveaways.shouldLike,
+				shouldFollowOthers: instagramGiveaways.shouldFollowOthers,
+				shouldComment: instagramGiveaways.shouldComment,
+				shouldMention: instagramGiveaways.shouldMention,
+				isDraft: instagramGiveaways.isDraft,
+				isBookmark: usersInstagramGiveaways.userId
+			})
+			.from(instagramGiveaways)
+			.leftJoin(
+				usersInstagramGiveaways,
+				eq(usersInstagramGiveaways.giveawayId, instagramGiveaways.id)
+			)
+			.where(
+				and(
+					lte(instagramGiveaways.endDate, endDate),
+					gte(instagramGiveaways.endDate, new Date().toISOString()),
+					eq(instagramGiveaways.isDraft, false)
+				)
+			)
+			.orderBy(instagramGiveaways.endDate);
+	}
 
-	return { items, period, currentUser: locals.user };
+	return {
+		items,
+		period,
+		currentUser: locals.user,
+		filterBookmark: filterBookmark === 'true' && locals.user
+	};
 };
 
 function getEndDate(period: Period) {
 	const now = new UTCDate();
 	switch (period) {
 		case 'day':
-			return setMinutes(setHours(now, 23), 59).toISOString();
+			return addHours(now, 24).toISOString();
 		case 'week':
 			return addWeeks(now, 1).toISOString();
 		case 'month':

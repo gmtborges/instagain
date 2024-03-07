@@ -1,10 +1,5 @@
 import nodemailer from 'nodemailer';
-import {
-	FAKE_SMTP_USERNAME,
-	FAKE_SMTP_PASSWORD,
-	SMTP_PASSWORD,
-	SMTP_USERNAME
-} from '$env/static/private';
+import { SMTP_PASSWORD, SMTP_USERNAME } from '$env/static/private';
 import { dev } from '$app/environment';
 
 let mailConfig;
@@ -13,15 +8,14 @@ if (dev) {
 		host: 'smtp.ethereal.email',
 		port: 587,
 		auth: {
-			user: FAKE_SMTP_USERNAME,
-			pass: FAKE_SMTP_PASSWORD
+			user: SMTP_USERNAME,
+			pass: SMTP_PASSWORD
 		}
 	};
 } else {
 	mailConfig = {
 		host: 'smtp.gmail.com',
 		port: 587,
-		secure: false,
 		auth: {
 			user: SMTP_USERNAME,
 			pass: SMTP_PASSWORD

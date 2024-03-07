@@ -1,5 +1,10 @@
 import { sql } from 'drizzle-orm';
-import { sqliteTable, text, integer, uniqueIndex } from 'drizzle-orm/sqlite-core';
+import {
+	sqliteTable,
+	text,
+	integer,
+	uniqueIndex
+} from 'drizzle-orm/sqlite-core';
 
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
@@ -10,7 +15,9 @@ export const users = sqliteTable(
 		id: text('id').primaryKey(),
 		fullName: text('full_name'),
 		email: text('email').unique().notNull(),
-		emailVerified: integer('email_verified', { mode: 'boolean' }).notNull().default(false),
+		emailVerified: integer('email_verified', { mode: 'boolean' })
+			.notNull()
+			.default(false),
 		hashedPassword: text('hashed_password'),
 		providerId: text('provider_id').unique(),
 		isAdmin: integer('is_admin', { mode: 'boolean' }).notNull().default(false)
@@ -50,10 +57,33 @@ export const instagramGiveaways = sqliteTable('instagram_giveaways', {
 	endDate: text('end_date').notNull(),
 	link: text('link').notNull(),
 	category: text('category'),
-	shouldFollow: integer('should_follow', { mode: 'boolean' }).notNull().default(false),
-	shouldLike: integer('should_like', { mode: 'boolean' }).notNull().default(false),
-	shouldFollowOthers: integer('should_follow_others', { mode: 'boolean' }).notNull().default(false),
-	shouldComment: integer('should_comment', { mode: 'boolean' }).notNull().default(false),
-	shouldMention: integer('should_mention', { mode: 'boolean' }).notNull().default(false),
+	shouldFollow: integer('should_follow', { mode: 'boolean' })
+		.notNull()
+		.default(false),
+	shouldLike: integer('should_like', { mode: 'boolean' })
+		.notNull()
+		.default(false),
+	shouldFollowOthers: integer('should_follow_others', { mode: 'boolean' })
+		.notNull()
+		.default(false),
+	shouldComment: integer('should_comment', { mode: 'boolean' })
+		.notNull()
+		.default(false),
+	shouldMention: integer('should_mention', { mode: 'boolean' })
+		.notNull()
+		.default(false),
 	isDraft: integer('is_draft', { mode: 'boolean' }).notNull().default(true)
 });
+
+export const usersInstagramGiveaways = sqliteTable(
+	'users_instagram_giveaways',
+	{
+		id: integer('id').primaryKey({ autoIncrement: true }),
+		userId: text('user_id')
+			.notNull()
+			.references(() => users.id),
+		giveawayId: integer('giveaway_id')
+			.notNull()
+			.references(() => instagramGiveaways.id)
+	}
+);

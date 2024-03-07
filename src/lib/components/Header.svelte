@@ -13,7 +13,9 @@
 	class:shadow-lg={hasScrolled}>
 	<div class="w-full mx-auto max-w-6xl">
 		<div class="flex w-full">
-			<a href="/" class="btn btn-ghost text-3xl font-display text-primary"> InstaGain </a>
+			<a href="/" class="btn btn-ghost text-3xl font-display text-primary">
+				InstaGain
+			</a>
 			<div class="ml-auto dropdown">
 				<div tabindex="0" role="button" class="btn btn-ghost md:hidden">
 					<svg
@@ -35,11 +37,12 @@
 					{#if currentUser}
 						<div>
 							<li>
-								<a class="link link-secondary" href="/giveaway">Cadastrar Sorteio</a>
+								<a class="link link-secondary" href="/giveaway"
+									>Cadastrar Sorteio</a>
 							</li>
-							<li>
-								<a class="link" href="/profile">Perfil</a>
-							</li>
+							<!-- <li> -->
+							<!-- 	<a class="link" href="/profile">Perfil</a> -->
+							<!-- </li> -->
 							<li>
 								<form action="?/signout" method="POST">
 									<button class="link link-primary">Sair</button>
@@ -49,7 +52,8 @@
 					{:else}
 						<div>
 							<li>
-								<a class="link link-secondary" href="/giveaway">Cadastrar Sorteio</a>
+								<a class="link link-secondary" href="/giveaway"
+									>Cadastrar Sorteio</a>
 							</li>
 							<li>
 								<a class="link link-primary" href="/auth/signin">Entrar</a>
@@ -62,21 +66,26 @@
 		<div class="navbar-end hidden md:flex gap-4">
 			{#if currentUser}
 				<div class="flex items-center gap-2">
-					<a class="btn btn-outline btn-secondary text-lg" href="/giveaway">Cadastrar Sorteio</a>
-					<a href="/profile" class="btn btn-ghost" role="button" aria-label="Perfil">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							class="w-7">
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-						</svg>
-					</a>
+					<a class="btn btn-outline btn-secondary text-lg" href="/giveaway"
+						>Cadastrar Sorteio</a>
+					<!-- <a -->
+					<!-- 	href="/profile" -->
+					<!-- 	class="btn btn-ghost" -->
+					<!-- 	role="button" -->
+					<!-- 	aria-label="Perfil"> -->
+					<!-- 	<svg -->
+					<!-- 		xmlns="http://www.w3.org/2000/svg" -->
+					<!-- 		fill="none" -->
+					<!-- 		viewBox="0 0 24 24" -->
+					<!-- 		stroke-width="1.5" -->
+					<!-- 		stroke="currentColor" -->
+					<!-- 		class="w-7"> -->
+					<!-- 		<path -->
+					<!-- 			stroke-linecap="round" -->
+					<!-- 			stroke-linejoin="round" -->
+					<!-- 			d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /> -->
+					<!-- 	</svg> -->
+					<!-- </a> -->
 					<form action="?/signout" method="POST">
 						<button class="btn btn-ghost">
 							<svg
@@ -97,8 +106,11 @@
 				</div>
 			{:else}
 				<div class="flex gap-4 items-center">
-					<a class="btn btn-outline btn-secondary text-lg" href="/giveaway">Cadastrar Sorteio</a>
-					<a class="btn btn-outline btn-primary text-lg" href="/auth/signin"> Entrar </a>
+					<a class="btn btn-outline btn-secondary text-lg" href="/giveaway"
+						>Cadastrar Sorteio</a>
+					<a class="btn btn-outline btn-primary text-lg" href="/auth/signin">
+						Entrar
+					</a>
 				</div>
 			{/if}
 		</div>

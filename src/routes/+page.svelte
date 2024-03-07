@@ -7,9 +7,15 @@
 
 	export let data: PageServerData;
 
-	const handleChange = (e: Event) => {
+	const handlePeriod = (e: Event) => {
 		const target = e.target as HTMLInputElement;
 		$page.url.searchParams.set('period', target.value);
+		goto(`?${$page.url.searchParams.toString()}`, { invalidateAll: true });
+	};
+
+	const handleBookmarkFilter = (e: Event) => {
+		const target = e.target as HTMLInputElement;
+		$page.url.searchParams.set('bookmark', target.checked ? 'true' : 'false');
 		goto(`?${$page.url.searchParams.toString()}`, { invalidateAll: true });
 	};
 </script>
@@ -42,14 +48,14 @@
 			Sorteios no Instagram
 		</h1>
 		<p class="text-2xl my-3">Encerra:</p>
-		<form class="flex flex-col sm:flex-row mb-10 md:gap-3">
+		<form class="flex flex-col sm:flex-row md:gap-3">
 			<label class="label cursor-pointer">
-				<span class="label-text text-lg mr-2">Hoje</span>
+				<span class="label-text text-lg mr-2">24h</span>
 				<input
 					type="radio"
 					name="radio-period"
 					value="day"
-					on:change={handleChange}
+					on:change={handlePeriod}
 					class="radio checked:bg-accent"
 					checked={data.period === 'day'} />
 			</label>
@@ -59,7 +65,7 @@
 					type="radio"
 					name="radio-period"
 					value="week"
-					on:change={handleChange}
+					on:change={handlePeriod}
 					class="radio checked:bg-accent"
 					checked={data.period === 'week'} />
 			</label>
@@ -69,18 +75,32 @@
 					type="radio"
 					name="radio-period"
 					value="month"
-					on:change={handleChange}
+					on:change={handlePeriod}
 					class="radio checked:bg-accent"
 					checked={data.period === 'month'} />
 			</label>
 		</form>
 		<section class="flex flex-col items-center">
-			<p class="text-lg">
-				{data.items?.length ?? 0} sorteios encontrados
+			<p class="text-lg text-center my-4">
+				{data.items?.length ?? 0} sorteio(s) encontrado(s)
 			</p>
-			<div class="my-10 flex justify-center flex-wrap gap-8">
+			{#if data.currentUser}
+				<div class="flex justify-end mb-2">
+					<label for="save" class="label cursor-pointer">
+						<span class="label-text mr-2">Sorteios salvos</span>
+						<input
+							id="save"
+							name="save"
+							type="checkbox"
+							checked={data.filterBookmark ? true : false}
+							on:change={handleBookmarkFilter}
+							class="toggle toggle-accent" />
+					</label>
+				</div>
+			{/if}
+			<div class="flex justify-center flex-wrap gap-3">
 				{#each data.items as item}
-					<GiveawayCard {item} />
+					<GiveawayCard {item} canBookmark={data.currentUser ? true : false} />
 				{/each}
 			</div>
 		</section>

@@ -32,20 +32,15 @@ export const actions: Actions = {
 			});
 		}
 
-		console.log({
-			endDate: date,
-			endHour,
-			link,
-			category,
-			shouldFollow,
-			shouldLike,
-			shouldFollowOthers,
-			shouldComment,
-			shouldMention
-		});
 		const [year, month, day] = date.toString().split('-');
 		const [hour, minute] = endHour.toString().split(':');
-		const endDate = new Date(+year, +month - 1, +day, +hour, +minute).toISOString();
+		const endDate = new Date(
+			+year,
+			+month - 1,
+			+day,
+			+hour,
+			+minute
+		).toISOString();
 
 		await db.insert(instagramGiveaways).values({
 			endDate,

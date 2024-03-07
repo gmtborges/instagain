@@ -7,7 +7,9 @@
 	let submitting = false;
 </script>
 
-<Toast level={form?.level} msg={form?.msg} />
+{#if form?.level && form?.msg}
+	<Toast level={form?.level} msg={form?.msg} />
+{/if}
 <div class="max-w-3xl mx-auto mt-10">
 	<h1 class="text-center font-display text-4xl">Cadastrar Sorteio</h1>
 	<form

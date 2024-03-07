@@ -6,6 +6,7 @@ import type { Actions } from './$types';
 import { db } from '$lib/server/db';
 import { users } from '$lib/db/schema';
 import { eq } from 'drizzle-orm';
+import { ToastLevel } from '$lib/components/types';
 
 export const actions: Actions = {
 	default: async (event) => {
@@ -21,7 +22,7 @@ export const actions: Actions = {
 		) {
 			return fail(400, {
 				email,
-				level: 'warn',
+				level: ToastLevel.Warning,
 				msg: 'E-mail e senha são obrigatórios'
 			});
 		}
@@ -43,7 +44,7 @@ export const actions: Actions = {
 			// If usernames are public, you may outright tell the user that the username is invalid.
 			return fail(400, {
 				email,
-				level: 'warn',
+				level: ToastLevel.Warning,
 				msg: 'E-mail ou senha incorretos'
 			});
 		}
@@ -55,7 +56,7 @@ export const actions: Actions = {
 		if (!validPassword) {
 			return fail(400, {
 				email,
-				level: 'warn',
+				level: ToastLevel.Warning,
 				msg: 'E-mail ou senha incorretos'
 			});
 		}

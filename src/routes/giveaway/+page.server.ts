@@ -1,7 +1,11 @@
 import { fail } from '@sveltejs/kit';
 import type { Actions } from './$types';
-import { instagramGiveaways } from '$lib/db/schema';
+import {
+	instagramGiveaways,
+	type InsertInstagramGiveaway
+} from '$lib/db/schema';
 import { db } from '$lib/server/db';
+import { ToastLevel } from '$lib/components/types';
 
 export const actions: Actions = {
 	default: async ({ request, locals }) => {
@@ -10,11 +14,11 @@ export const actions: Actions = {
 		const endHour = formData.get('endHour');
 		const link = formData.get('link');
 		const category = formData.get('category');
-		const shouldFollow = !!formData.get('shouldFollow');
-		const shouldLike = !!formData.get('shouldLike');
-		const shouldFollowOthers = !!formData.get('shouldFollowOthers');
-		const shouldComment = !!formData.get('shouldComment');
-		const shouldMention = !!formData.get('shouldMention');
+		const shouldFollow = formData.get('shouldFollow');
+		const shouldLike = formData.get('shouldLike');
+		const shouldFollowOthers = formData.get('shouldFollowOthers');
+		const shouldComment = formData.get('shouldComment');
+		const shouldMention = formData.get('shouldMention');
 
 		if (!date || !link || !endHour) {
 			return fail(400, {
@@ -27,7 +31,7 @@ export const actions: Actions = {
 				shouldFollowOthers,
 				shouldComment,
 				shouldMention,
-				level: 'warn',
+				level: ToastLevel.Warning,
 				msg: 'Campos obrigatórios não preenchidos'
 			});
 		}
@@ -42,18 +46,20 @@ export const actions: Actions = {
 			+minute
 		).toISOString();
 
-		await db.insert(instagramGiveaways).values({
+		const values: InsertInstagramGiveaway = {
 			endDate,
-			link,
-			category,
-			shouldFollow,
-			shouldLike,
-			shouldFollowOthers,
-			shouldComment,
-			shouldMention,
+			link: link.toString(),
+			category: category?.toString(),
+			shouldFollow: !!shouldFollow,
+			shouldLike: !!shouldLike,
+			shouldFollowOthers: !!shouldFollowOthers,
+			shouldComment: !!shouldComment,
+			shouldMention: !!shouldMention,
 			isDraft: locals.user?.isAdmin ? false : true
-		});
+		};
 
-		return { level: 'success', msg: 'Sorteio criado com sucesso' };
+		await db.insert(instagramGiveaways).values(values);
+
+		return { level: ToastLevel.Success, msg: 'Sorteio criado com sucesso' };
 	}
 };

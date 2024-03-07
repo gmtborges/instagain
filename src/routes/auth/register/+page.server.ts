@@ -9,6 +9,7 @@ import { sendEmail } from '$lib/server/email';
 import { LibsqlError } from '@libsql/client';
 import { render } from 'svelte-email';
 import VerificationCode from '$lib/email-templates/VerificationCode.svelte';
+import { ToastLevel } from '$lib/components/types';
 
 export const actions: Actions = {
 	default: async (event) => {
@@ -24,7 +25,7 @@ export const actions: Actions = {
 			return fail(400, {
 				name,
 				email,
-				level: 'warn',
+				level: ToastLevel.Warning,
 				msg: 'E-mail invalido'
 			});
 		}
@@ -37,7 +38,7 @@ export const actions: Actions = {
 			return fail(400, {
 				name,
 				email,
-				level: 'warn',
+				level: ToastLevel.Warning,
 				msg: 'Senha não atende aos requisitos mínimos de segurança.'
 			});
 		}
@@ -46,7 +47,7 @@ export const actions: Actions = {
 			return fail(400, {
 				name,
 				email,
-				level: 'warn',
+				level: ToastLevel.Warning,
 				msg: 'Nome completo deve ter entre 3 e 255 caracteres.'
 			});
 		}
@@ -68,7 +69,7 @@ export const actions: Actions = {
 					return fail(400, {
 						name,
 						email,
-						level: 'warn',
+						level: ToastLevel.Warning,
 						msg: 'E-mail já cadastrado'
 					});
 				}
@@ -77,7 +78,7 @@ export const actions: Actions = {
 				return fail(500, {
 					name,
 					email,
-					level: 'error',
+					level: ToastLevel.Error,
 					msg: 'Erro no servidor. Tente novamente mais tarde.'
 				});
 			}
@@ -89,7 +90,11 @@ export const actions: Actions = {
 			props: { verificationCode, name }
 		});
 
-		await sendEmail({ email, subject: 'InstaGain - Verificação de e-mail', body });
+		await sendEmail({
+			email,
+			subject: 'InstaGain - Verificação de e-mail',
+			body
+		});
 
 		const session = await lucia.createSession(userId, {});
 		const sessionCookie = lucia.createSessionCookie(session.id);

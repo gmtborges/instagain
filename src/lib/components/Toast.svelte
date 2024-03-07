@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
+	import { ToastLevel } from '$lib/components/types';
 
-	type ToastLevel = 'warn' | 'info' | 'error' | 'success';
 	export let level: ToastLevel;
 	export let msg: string;
 
@@ -18,10 +18,10 @@
 	<div class="toast toast-center md:toast-bottom md:toast-end" transition:fade>
 		<div
 			class="alert"
-			class:alert-warning={level === 'warn'}
-			class:alert-info={level === 'info'}
-			class:alert-error={level === 'error'}
-			class:alert-success={level === 'success'}>
+			class:alert-info={level === ToastLevel.Info}
+			class:alert-warning={level === ToastLevel.Warning}
+			class:alert-error={level === ToastLevel.Error}
+			class:alert-success={level === ToastLevel.Success}>
 			<span>{msg}</span>
 		</div>
 	</div>

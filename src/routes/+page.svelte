@@ -70,7 +70,7 @@
 					checked={data.period === 'week'} />
 			</label>
 			<label class="label cursor-pointer">
-				<span class="label-text text-lg mr-2">Em um mês</span>
+				<span class="label-text text-lg mr-2">Em 30 dias</span>
 				<input
 					type="radio"
 					name="radio-period"

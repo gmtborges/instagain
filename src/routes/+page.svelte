@@ -42,7 +42,7 @@
 </script>
 
 <svelte:head>
-	<title>InstaGain - Seus sorteios do Instagram em um só lugar.</title>
+	<title>InstaGain - Sorteios do Instagram, fácil de encontrar.</title>
 	<meta
 		name="description"
 		content="Encontre sorteios do Instagram em um só lugar." />

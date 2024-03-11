@@ -42,7 +42,10 @@
 </script>
 
 <svelte:head>
-	<title>InstaGain - Seus sorteios em um só lugar.</title>
+	<title>InstaGain - Seus sorteios do Instagram em um só lugar.</title>
+	<meta
+		name="description"
+		content="Encontre sorteios do Instagram em um só lugar." />
 </svelte:head>
 
 <Header currentUser={data.currentUser} />

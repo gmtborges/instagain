@@ -6,10 +6,10 @@ import type { Actions } from './$types';
 import { db } from '$lib/server/db';
 import { users } from '$lib/db/schema';
 import { sendEmail } from '$lib/server/email';
-import { LibsqlError } from '@libsql/client';
 import { render } from 'svelte-email';
 import VerificationCode from '$lib/email-templates/VerificationCode.svelte';
 import { ToastLevel } from '$lib/components/types';
+import { SqliteError } from 'better-sqlite3';
 
 export const actions: Actions = {
 	default: async (event) => {
@@ -64,15 +64,14 @@ export const actions: Actions = {
 				hashedPassword: hashedPassword
 			});
 		} catch (error) {
-			if (error instanceof LibsqlError) {
-				if (error.code === 'SQLITE_CONSTRAINT') {
-					return fail(400, {
-						name,
-						email,
-						level: ToastLevel.Warning,
-						msg: 'E-mail já cadastrado'
-					});
-				}
+			console.error(error);
+			if (error instanceof SqliteError && error.code.includes('CONSTRAINT')) {
+				return fail(400, {
+					name,
+					email,
+					level: ToastLevel.Warning,
+					msg: 'E-mail já cadastrado'
+				});
 			} else {
 				console.error(error);
 				return fail(500, {

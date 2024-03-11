@@ -1,6 +1,5 @@
 import * as schema from '$lib/db/schema';
-import { createClient } from '@libsql/client';
-import { drizzle } from 'drizzle-orm/libsql';
+import { drizzle } from 'drizzle-orm/better-sqlite3';
 import { fileURLToPath } from 'url';
 import csv from 'csv-parser';
 import fs from 'fs';
@@ -8,10 +7,17 @@ import path from 'path';
 import type { InstagramGiveaway } from '$lib/db/schema';
 import { Argon2id } from 'oslo/password';
 import { generateId } from 'lucia';
+import sqlite from 'better-sqlite3';
+import 'dotenv/config';
 
-const client = createClient({
-	url: process.env.DATABASE_URL!
-});
+if (!process.env.DATABASE_URL) {
+	throw new Error('DATABASE_URL is not defined');
+}
+const client = sqlite(process.env.DATABASE_URL);
+client.pragma('journal_mode=WAL');
+client.pragma('synchronous=normal');
+client.pragma('foreign_keys=on');
+
 const db = drizzle(client, { schema });
 
 const __filename = fileURLToPath(import.meta.url);
@@ -66,6 +72,7 @@ async function seedUsers() {
 async function seed() {
 	await seedGiveaways();
 	await seedUsers();
+	client.close();
 }
 
 seed();

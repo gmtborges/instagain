@@ -1,36 +1,28 @@
-# Build stage
-FROM node:20-alpine as build
+FROM node:20-alpine as base
+WORKDIR /usr/local/app
 
-# Set the working directory in the container
-WORKDIR /app
+FROM base as install
+# Cache prod dependencies
+RUN mkdir -p /temp/prod
+COPY package.json package-lock.json /temp/prod/
+RUN cd /temp/prod && npm ci --omit=dev
 
-# Copy the package.json and package-lock.json (if available)
-COPY package*.json ./
+RUN mkdir -p /temp/dev
+COPY package.json package-lock.json /temp/dev/
+RUN cd /temp/dev && npm ci --prefer-offline --no-audit
 
-# Install dependencies
-RUN npm ci --prefer-offline --no-audit
+FROM base as build
+ENV NODE_ENV=production
 
-# Copy the rest of your app's source code
+COPY --from=install /temp/dev/node_modules ./node_modules
 COPY . .
-
-# Build your app
 RUN npm run build
 
 # Production stage
-FROM node:20-alpine as production
+FROM base as production
 
-# Set the working directory in the container
-WORKDIR /usr/local/app
+COPY --from=install /temp/prod/node_modules ./node_modules
+COPY --from=build /usr/local/app/ .
 
-# Copy built artifacts from the build stage
-COPY --from=build /app/build ./build
-COPY --from=build /app/package*.json ./
-
-# Install production dependencies only
-RUN npm ci --omit=dev
-
-# Expose the port your app runs on
-EXPOSE 3000
-
-# Command to run your app using Node.js
+EXPOSE 3000/tcp
 CMD ["node", "build"]

@@ -51,7 +51,7 @@
 <Header currentUser={data.currentUser} />
 <main class="flex flex-col md:flex-row mt-2 md:mt-5">
 	<aside class="flex-1 text-center"></aside>
-	<div class="flex flex-col items-center max-w-7xl mx-auto">
+	<div class="flex flex-col items-center max-w-7xl mx-auto pb-5">
 		{#if data.currentUser && !data.currentUser.emailVerified}
 			<div role="alert" class="alert bg-amber-200 w-4/5 mb-5">
 				<svg

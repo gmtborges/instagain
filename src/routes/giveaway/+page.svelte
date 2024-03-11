@@ -58,7 +58,7 @@
 				type="text"
 				placeholder="https://www.instagram.com/p/C23EYTXyNJM"
 				required
-				pattern="https://(www.)?instagram.com/p/.+"
+				pattern="https://(www.)?instagram.com/p/.+/"
 				title="Post do Instagram"
 				class="input input-bordered"
 				name="link"

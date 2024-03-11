@@ -1,19 +1,24 @@
-import { instagramGiveaways, usersInstagramGiveaways } from '$lib/db/schema';
+import {
+	instagramGiveaways,
+	usersInstagramGiveaways,
+	type InstagramGiveaway
+} from '$lib/db/schema';
 import { db } from '$lib/server/db';
 import type { Actions, PageServerLoad } from './$types';
-import { and, eq, gte, like, lte } from 'drizzle-orm';
+import { and, eq, gte, like, lte, sql } from 'drizzle-orm';
 import { UTCDate } from '@date-fns/utc';
 import { addHours, addWeeks } from 'date-fns';
 import { fail, redirect } from '@sveltejs/kit';
 import { lucia } from '$lib/server/auth';
 
 type Period = 'day' | 'week' | 'month' | '2months';
+type InstagramGiveawayItem = InstagramGiveaway & { isBookmark: boolean };
 
 export const load: PageServerLoad = async ({ url, locals }) => {
 	const period = url.searchParams.get('period') || 'month';
 	const filterBookmark = url.searchParams.get('bookmark');
 	const category = url.searchParams.get('category');
-	let items = [];
+	let items: InstagramGiveawayItem[] = [];
 
 	if (filterBookmark === 'true' && locals.user) {
 		items = await db
@@ -29,7 +34,7 @@ export const load: PageServerLoad = async ({ url, locals }) => {
 				shouldComment: instagramGiveaways.shouldComment,
 				shouldMention: instagramGiveaways.shouldMention,
 				isDraft: instagramGiveaways.isDraft,
-				isBookmark: usersInstagramGiveaways.userId
+				isBookmark: sql<boolean>`${usersInstagramGiveaways.userId}`
 			})
 			.from(instagramGiveaways)
 			.leftJoin(
@@ -58,7 +63,7 @@ export const load: PageServerLoad = async ({ url, locals }) => {
 				shouldComment: instagramGiveaways.shouldComment,
 				shouldMention: instagramGiveaways.shouldMention,
 				isDraft: instagramGiveaways.isDraft,
-				isBookmark: usersInstagramGiveaways.userId
+				isBookmark: sql<boolean>`${usersInstagramGiveaways.userId}`
 			})
 			.from(instagramGiveaways)
 			.leftJoin(

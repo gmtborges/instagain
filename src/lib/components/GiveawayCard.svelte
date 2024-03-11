@@ -2,7 +2,7 @@
 	import type { InstagramGiveaway } from '$lib/db/schema';
 	import { onMount } from 'svelte';
 
-	export let item: InstagramGiveaway;
+	export let item: InstagramGiveaway & { isBookmark: boolean };
 	export let canBookmark = false;
 	$: isBookmark = item.isBookmark;
 	let isOutDated = new Date(item.endDate) < new Date();
@@ -152,12 +152,12 @@
 		<blockquote
 			class="instagram-media"
 			data-instgrm-captioned
-			data-instgrm-permalink={`${item.link}?utm_source=ig_embed&amp;utm_campaign=loading`}
+			data-instgrm-permalink={`${item.link}`}
 			data-instgrm-version="14"
 			style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:540px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);">
 			<div style="padding:16px;">
 				<a
-					href={`${item.link}?utm_source=ig_embed&amp;utm_campaign=loading`}
+					href={`${item.link}`}
 					style=" background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%;"
 					target="_blank">
 					<div

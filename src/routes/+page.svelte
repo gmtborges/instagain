@@ -3,7 +3,7 @@
 	import GiveawayCard from '$lib/components/GiveawayCard.svelte';
 	import Header from '$lib/components/Header.svelte';
 	import { page } from '$app/stores';
-	import { goto } from '$app/navigation';
+	import { afterNavigate, goto } from '$app/navigation';
 
 	export let data: PageServerData;
 
@@ -19,7 +19,19 @@
 		goto(`?${$page.url.searchParams.toString()}`, { invalidateAll: true });
 	};
 
+	let isTyping = false;
+	let categoryInput: HTMLInputElement;
+
+	afterNavigate(() => {
+		if (isTyping) {
+			setTimeout(() => {
+				categoryInput.focus();
+			});
+		}
+	});
+
 	const handleCategoryFilter = (e: Event) => {
+		isTyping = true;
 		const target = e.target as HTMLInputElement;
 		if (!target.value) {
 			$page.url.searchParams.delete('category');
@@ -105,6 +117,7 @@
 				maxlength="250"
 				value={data.category}
 				placeholder="categoria: iphone, pix ..."
+				bind:this={categoryInput}
 				on:input={debounce(handleCategoryFilter)} />
 
 			<svg

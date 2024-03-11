@@ -19,19 +19,7 @@
 		goto(`?${$page.url.searchParams.toString()}`, { invalidateAll: true });
 	};
 
-	let isTyping = false;
-	let categoryInput: HTMLInputElement;
-
-	afterNavigate(() => {
-		if (isTyping) {
-			setTimeout(() => {
-				categoryInput.focus();
-			});
-		}
-	});
-
 	const handleCategoryFilter = (e: Event) => {
-		isTyping = true;
 		const target = e.target as HTMLInputElement;
 		if (!target.value) {
 			$page.url.searchParams.delete('category');
@@ -116,8 +104,7 @@
 				type="text"
 				maxlength="250"
 				value={data.category}
-				placeholder="categoria: iphone, pix ..."
-				bind:this={categoryInput}
+				placeholder="iphone, pix ..."
 				on:input={debounce(handleCategoryFilter)} />
 
 			<svg

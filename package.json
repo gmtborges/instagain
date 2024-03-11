@@ -10,8 +10,9 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --check .",
 		"format": "prettier --write .",
+		"db": "drizzle-kit",
 		"db:generate": "drizzle-kit generate:sqlite",
-		"db:push": "drizzle-kit push:sqlite",
+		"db:migrate": "DATABASE_URL=http://127.0.0.1:8080 tsx ./src/lib/db/migrate.ts",
 		"db:seed": "DATABASE_URL=http://127.0.0.1:8080 tsx ./src/lib/db/seed.ts",
 		"db:studio": "drizzle-kit studio"
 	},
@@ -48,7 +49,6 @@
 		"arctic": "^1.2.1",
 		"date-fns": "^3.3.1",
 		"drizzle-orm": "^0.29.4",
-		"lodash-es": "^4.17.21",
 		"nodemailer": "^6.9.11",
 		"oslo": "^1.1.2",
 		"svelte-email": "^0.0.4"

@@ -1,7 +1,7 @@
 import { instagramGiveaways, usersInstagramGiveaways } from '$lib/db/schema';
 import { db } from '$lib/server/db';
 import type { Actions, PageServerLoad } from './$types';
-import { and, eq, gte, lte } from 'drizzle-orm';
+import { and, eq, gte, like, lte } from 'drizzle-orm';
 import { UTCDate } from '@date-fns/utc';
 import { addHours, addWeeks } from 'date-fns';
 import { fail, redirect } from '@sveltejs/kit';
@@ -12,6 +12,7 @@ type Period = 'day' | 'week' | 'month' | '2months';
 export const load: PageServerLoad = async ({ url, locals }) => {
 	const period = url.searchParams.get('period') || 'month';
 	const filterBookmark = url.searchParams.get('bookmark');
+	const category = url.searchParams.get('category');
 	let items = [];
 
 	if (filterBookmark === 'true' && locals.user) {
@@ -68,7 +69,10 @@ export const load: PageServerLoad = async ({ url, locals }) => {
 				and(
 					lte(instagramGiveaways.endDate, endDate),
 					gte(instagramGiveaways.endDate, new Date().toISOString()),
-					eq(instagramGiveaways.isDraft, false)
+					eq(instagramGiveaways.isDraft, false),
+					category
+						? like(instagramGiveaways.category, `%${category.toLowerCase()}%`)
+						: undefined
 				)
 			)
 			.orderBy(instagramGiveaways.endDate);
@@ -77,6 +81,7 @@ export const load: PageServerLoad = async ({ url, locals }) => {
 	return {
 		items,
 		period,
+		category,
 		currentUser: locals.user,
 		filterBookmark: filterBookmark === 'true' && locals.user
 	};

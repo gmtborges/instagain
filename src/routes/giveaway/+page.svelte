@@ -75,6 +75,7 @@
 				name="category"
 				class="input input-bordered"
 				placeholder="eletronicos, moda... separados por virgula."
+				maxlength="250"
 				value={form?.category ?? ''} />
 		</div>
 

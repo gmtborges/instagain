@@ -3,7 +3,7 @@
 	import GiveawayCard from '$lib/components/GiveawayCard.svelte';
 	import Header from '$lib/components/Header.svelte';
 	import { page } from '$app/stores';
-	import { afterNavigate, goto } from '$app/navigation';
+	import { goto } from '$app/navigation';
 
 	export let data: PageServerData;
 
@@ -135,7 +135,7 @@
 					</label>
 				</div>
 			{/if}
-			<div class="flex justify-center flex-wrap gap-3">
+			<div class="flex justify-center flex-wrap gap-3 cards">
 				{#each data.items as item}
 					<GiveawayCard {item} canBookmark={data.currentUser ? true : false} />
 				{/each}

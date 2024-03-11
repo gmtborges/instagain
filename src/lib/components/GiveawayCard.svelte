@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { InstagramGiveaway } from '$lib/db/schema';
-	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
+	import { goto } from '$app/navigation';
 
 	export let item: InstagramGiveaway & { isBookmark: boolean };
 	export let canBookmark = false;
@@ -17,6 +18,12 @@
 		});
 		const data = await response.json();
 		isBookmark = data.isBookmark;
+		if ($page.url.searchParams.get('bookmark')) {
+			goto(`?${$page.url.searchParams.toString()}`, {
+				invalidateAll: true,
+				noScroll: true
+			});
+		}
 	};
 
 	let loginModal: HTMLDialogElement;
@@ -30,7 +37,7 @@
 </svelte:head>
 
 <div
-	class="card w-96 bg-base-100 shadow-xl border p-3"
+	class="card w-96 bg-base-100 shadow-xl border p-3 fade"
 	class:bg-yellow-50={isOutDated}
 	class:text-zinc-400={isOutDated}>
 	<div class="card-actions justify-between mx-2">
@@ -133,3 +140,20 @@
 		<button>close</button>
 	</form>
 </dialog>
+
+<style>
+	.fade {
+		animation: fade 500ms ease-in-out;
+	}
+	@keyframes fade {
+		0% {
+			opacity: 0;
+		}
+		50% {
+			opacity: 0.5;
+		}
+		100% {
+			opacity: 1;
+		}
+	}
+</style>
